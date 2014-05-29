@@ -33,4 +33,4 @@ app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-});//创建 http 服务器并监听 3000 端口，成功后在命令行中显示
+});//创建 http 服务器并监听 3000 端口，成功后在命令行中显示 **Express server listening on port 3000**，然后我们就可以在浏览器访问 localhost:3000 了。
