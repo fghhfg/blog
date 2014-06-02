@@ -28,8 +28,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }//开发环境的错误处理，输出错误信息
 //路由控制器
-app.get('/', routes.index);
+
 app.get('/users', user.list);
+
+routes(app);//总的路由接口
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
