@@ -8,6 +8,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var MongoStore = require('connect-mongo')(express);
+var settings = require('./settings');
 
 var app = express();
 
@@ -20,6 +22,15 @@ app.use(express.logger('dev'));//connect 内建的中间件，在开发环境下
 app.use(express.json());//解析json
 app.use(express.urlencoded());
 app.use(express.methodOverride());//connect 内建的中间件，可以协助处理 POST 请求，伪装 PUT、DELETE 和其他 HTTP 方法
+app.use(express.cookieParser());//cookie解析
+app.use(express.session({
+	secret: settings.cookieSecret,//防止篡改cookie
+	key: settings.db,//cookie name
+	cookie: {maxAge: 1000*60*60*24*30},//30 days
+	store:new MongoStore({
+		db:settings.db
+	})//把会话信息存储在数据库
+	}));//session surport
 app.use(app.router);//调解路由解析规则
 app.use(express.static(path.join(__dirname, 'public')));//设置静态文件目录
 

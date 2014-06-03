@@ -8,6 +8,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var MongoStore = require('connect-mongo')(express);
+var settings = require('./settings');
 
 var app = express();
 
@@ -20,6 +22,15 @@ app.use(express.logger('dev'));//connect 内建的中间件，在开发环境下
 app.use(express.json());//解析json
 app.use(express.urlencoded());
 app.use(express.methodOverride());//connect 内建的中间件，可以协助处理 POST 请求，伪装 PUT、DELETE 和其他 HTTP 方法
+app.use(express.cookieParser());//cookie解析
+app.use(express.session({
+	secret: settings.cookieSecret,//防止篡改cookie
+	key: settings.db,//cookie name
+	cookie: {maxAge: 1000*60*60*24*30},//30 days
+	store:new MongoStore({
+		db:settings.db
+	})//把会话信息存储在数据库
+	}));//session surport
 app.use(app.router);//调解路由解析规则
 app.use(express.static(path.join(__dirname, 'public')));//设置静态文件目录
 
@@ -28,9 +39,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }//开发环境的错误处理，输出错误信息
 //路由控制器
-app.get('/', routes.index);
+
 app.get('/users', user.list);
+
+routes(app);//总的路由接口
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-});//创建 http 服务器并监听 3000 端口，成功后在命令行中显示 **Express server listening on port 3000**，然后我们就可以在浏览器访问 localhost:3000 了。
+});//创建 http 服务器并监听 3000 端口，成功后在命令行中显示
