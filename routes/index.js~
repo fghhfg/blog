@@ -1,15 +1,26 @@
+//注册时可增加邮箱验证，单个邮箱注册一次
+
+
 var crypto = require('crypto');//Node.js 的一个核心模块，我们用它生成散列值来加密密码
 var User = require('../models/user.js');
 
 module.exports = function(app){
 	app.get('/',function(req, res){
-  	res.render('index', { title: '主页' });//使用 ejs 模板引擎解析 views/index.ejs
-		}
-	);
+  	res.render('index', { 
+  	//title:'主页'，
+  	user:req.session.user,
+  	success:req.flash('success').toString(),
+  	error:req.flash('error').toString()
+  	 });//使用 ejs 模板引擎解析 views/index.ejs
+		});
 	
 	app.get('/reg',function(req, res){
-  	res.render('reg', { title: '注册' });
-  	
+  	res.render('reg', { 
+  		title: '注册',
+  		user:req.session.user,
+  		success:req.flash('success').toString(),
+  		error:req.flash('error').toString()
+  		});  	
 		}
 	);
 	app.post('/reg',function(req,res){
@@ -20,7 +31,7 @@ module.exports = function(app){
   	//检验两次密码是否一致
   	if(password_re != password){
   		req.flash('error','两次输入密码不一致！重新输入');
-  		//return res.redirect('/reg');//返回注册页
+  		return res.redirect('/reg');//返回注册页
   	}
   	//生成密码的md5值
   	var md5 = crypto.createHash('md5');

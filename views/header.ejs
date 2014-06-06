@@ -14,8 +14,23 @@
   
   <nav>
 		<span><a title = "主页" href = "/">home</a></span>
+		<% if (user) { %>
+			<span><a title = "发表" href = "/post">post</a></span>
+			<span><a title = "退出" href = "/logout">logout</a></span>
+		<% }else{ %>
 		<span><a title = "注册" href = "/reg">reg</a></span>
 		<span><a title = "登陆" href = "/login">login</a></span>
+		<% } %>
   </nav>
-  <article>
+  
+  <article>	
+  	<% if(success){ %>
+  		<div><%= success %></div>
+  		<% } %>
+  	<% if(error){ %>
+  		<div><%= error %></div>
+  		<% } %>
+  		
+  		
+  
   
