@@ -10,6 +10,8 @@ var http = require('http');
 var path = require('path');
 var MongoStore = require('connect-mongo')(express);
 var settings = require('./settings');
+var flash = require('connect-flash');
+
 
 var app = express();
 
@@ -17,6 +19,8 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(flash());//flash通知中间件
 app.use(express.favicon());//connect 内建的中间件，使用默认的 favicon 图标，如果想使用自己的图标，需改为 app.use(express.favicon(__dirname + '/public/images/favicon.ico'))
 app.use(express.logger('dev'));//connect 内建的中间件，在开发环境下使用，在终端显示简单的日志
 app.use(express.json());//解析json

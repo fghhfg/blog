@@ -1,5 +1,5 @@
 {
-  "name": "N-blog",
+  "name": "blog",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "express": "3.8.1",
     "ejs": "*",
     "mongodb": "*",
-    "connect-mongo": "*"
+    "connect-mongo": "*",
+    "connect-flash": "*"
   }
 }
