@@ -20,7 +20,7 @@
 		<% }else{ %>
 		<span><a title = "注册" href = "/reg">reg</a></span>
 		<span><a title = "登陆" href = "/login">login</a></span>
-		<%}%>
+		<% } %>
   </nav>
   
   <article>	

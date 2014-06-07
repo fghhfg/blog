@@ -14,6 +14,7 @@ module.exports = function(app){
   	 });//使用 ejs 模板引擎解析 views/index.ejs
 		});
 	
+	app.get('/reg',checkNotLogin);
 	app.get('/reg',function(req, res){
   	res.render('reg', { 
   		title: '注册',
@@ -23,6 +24,8 @@ module.exports = function(app){
   		});  	
 		}
 	);
+	
+	app.post('/reg',checkNotLogin);
 	app.post('/reg',function(req,res){
 		var name = req.body.name;
   	var password = req.body.password;
@@ -60,6 +63,7 @@ module.exports = function(app){
   	});
 	});
 	
+	app.get('/login',checkNotLogin);
 	app.get('/login',function(req, res){
   	res.render('login', { 
   	title: '登陆',
@@ -69,6 +73,8 @@ module.exports = function(app){
   	 });
 		}
 	);
+	
+	app.post('/login',checkNotLogin);
 	app.post('/login',function(req,res){
 		//加密密码，生成密码的md5值
 		var md5 = crypto.createHash('md5');
@@ -90,19 +96,43 @@ module.exports = function(app){
 		})
 	});
 	
+	app.get('/post',checkLogin);
 	app.get('/post',function(req, res){
-  	res.render('post', { title: '发表' });
-		}
-	);
+  	res.render('post', { 
+  		title: '发表',
+  		user:req.session.user,
+  		success:req.flash('success').toString,
+  		error:req.flash('error').toString
+  		});
+		});
+		
+	app.post('/post',checkLogin);
 	app.post('/post',function(req,res){
 	
 	});
 	
+	app.get('/logout',checkLogin);
 	app.get('/logout',function(req, res){
   	req.session.user = null;
   	req.flash('success','退出成功');
   	res.redirect('/');
 		});
+	
+	function checkLogin(req,res,next){
+		if(!req.session.user){
+			req.flash('error','未登录');
+			res.redirect('/login');
+		}
+		next();
+	}
+	
+	function checkNotLogin(req,res,next){
+		if(req.session.user){
+			req.flash('error','已登录');
+			res.redirect('back');
+		}
+		next();
+	}
 	
 	
 };

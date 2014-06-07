@@ -48,7 +48,7 @@ User.get = function(name,callback){
 			return callback(err);
 		}
 		//读取users集合
-		db.collection('user',function(err,collection){
+		db.collection('users',function(err,collection){
 			if(err){
 				mongodb.close();
 				return callback(err);
