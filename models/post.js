@@ -56,7 +56,7 @@ Post.prototype.save = function(callback){
 
 
 //读取文章
-Post.get = function(name, callback){
+Post.getAll = function(name, callback){
 	//打开数据库
 	mongodb.open(function(err,db){
 		if(err){
@@ -89,4 +89,33 @@ Post.get = function(name, callback){
 		})
 	})
 }
-
+//获取一篇文章
+Post.getOne = function(name, day,title, callback){
+	//打开数据库
+	mongodb.open(function(err,db){
+		if(err){
+			return callback(err);
+		}
+		
+		db.collection('posts',function(err,collection){
+			if(err){
+				mongodb.close();
+				return callback(err);
+			}
+			
+			//根据day,name,title对象查询文章
+			collection.findOne({
+				"name": name,
+				"time.day":day,
+				"title":title
+			},function(err,doc){
+					mongodb.close();
+					if(err){
+						return callback(err);
+					}
+					doc.post = markdown.toHTML(doc.post);
+					callback(null,doc);//成功，已数组形式返回查询结果
+			})
+		})
+	})
+}
