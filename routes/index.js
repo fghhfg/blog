@@ -76,8 +76,8 @@ module.exports = function(app){
   	res.render('login', { 
   	title: '登陆',
   	user:req.session.user,
-  	//success:req.flash('success').toString(),
-  	//error:req.flash('error').toString()
+  	success:req.flash('success').toString(),
+  	error:req.flash('error').toString()
   	 });
 		}
 	);
@@ -109,8 +109,8 @@ module.exports = function(app){
   	res.render('post', { 
   		title: '发表',
   		user:req.session.user,
-  		success:req.flash('success').toString,
-  		error:req.flash('error').toString
+  		success:req.flash('success').toString(),
+  		error:req.flash('error').toString()
   		});
 		});
 		
