@@ -25,6 +25,7 @@ app.use(express.favicon());//connect 内建的中间件，使用默认的 favico
 app.use(express.logger('dev'));//connect 内建的中间件，在开发环境下使用，在终端显示简单的日志
 app.use(express.json());//解析json
 app.use(express.urlencoded());
+app.use(express.multipart({keepExtensions: true,uploadDir:'./public/images'}));//上传文件,保留文件后缀名，上传目录设置
 app.use(express.methodOverride());//connect 内建的中间件，可以协助处理 POST 请求，伪装 PUT、DELETE 和其他 HTTP 方法
 app.use(express.cookieParser());//cookie解析
 app.use(express.session({

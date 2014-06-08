@@ -4,6 +4,7 @@
 var crypto = require('crypto');//Node.js 的一个核心模块，我们用它生成散列值来加密密码
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
+var fs = require('fs');
 
 module.exports = function(app){
 	app.get('/',function(req, res){
@@ -137,6 +138,33 @@ module.exports = function(app){
   	res.redirect('/');
 		});
 	
+	app.get('/upload',checkLogin);
+	app.get('/upload',function(req, res){
+  	res.render('upload', { 
+  		title: '文件上传',
+  		user:req.session.user,
+  		success:req.flash('success').toString(),
+  		error:req.flash('error').toString()
+  		});
+		});
+		
+	app.post('/upload',checkLogin);
+	app.post('/upload',function(req,res){
+		for(var i in req.files){
+			if(req.files[i].size === 0){
+				//使用同步的方式删除一个文件
+				fs.unlinkSync(req.files[i].path);
+				console.log('Successfully removed an empty file!');
+			}else{
+				var target_path = './public/images/' + req.files[i].name;
+				//使用同步的方式重命名一个文件
+			fs.renameSync(req.files[i].path,target_path);
+			console.log('Successfully renamed a file!');
+			}
+		}
+		req.flash('success','上传成功');
+		res.redirect('/upload');
+	})
 	function checkLogin(req,res,next){
 		if(!req.session.user){
 			req.flash('error','未登录');
