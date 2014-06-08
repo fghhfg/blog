@@ -11,8 +11,7 @@ var path = require('path');
 var MongoStore = require('connect-mongo')(express);
 var settings = require('./settings');
 var flash = require('connect-flash');
-var crypto = require('crypto');//Node.js 的一个核心模块，我们用它生成散列值来加密密码
-var User = require('./models/user.js');
+
 
 var app = express();
 
