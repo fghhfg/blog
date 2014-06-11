@@ -34,9 +34,22 @@ nav a{
 	color:#000000;
 	}
 nav a:hover{
-background-color:#ff0000;
-color:#f9f9f9;-webkit-transition:color .2s linear;}
-article{font-size:16px;padding-top:.5em;}
-article a{color:#dd0000;text-decoration:none;}
-article a:hover{color:#333333;text-decoration:underline;}
-.info{font-size:14px;}
+	background-color:#ff0000;
+	color:#f9f9f9;
+	-webkit-transition:color .2s linear;
+	}
+article{
+	font-size:16px;
+	padding-top:.5em;
+	}
+article a{
+	color:#dd0000;
+	text-decoration:none;
+	}
+article a:hover{
+	color:#333333;
+	text-decoration:underline;
+	}
+.info{
+	font-size:14px;
+	}
