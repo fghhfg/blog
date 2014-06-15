@@ -1,4 +1,4 @@
-<% -include header %>
+<%- include header %>
 	<form method = "post" >
 		标题:<br />
 		<input type = "text" name = "title" /><br />
@@ -6,4 +6,4 @@
 		<textarea name = "post" rows = "20" cols = "100"></textarea><br />
 		<input type = "submit" value = "发表" />
 	</form>
-<% -include footer %>
+<%- include footer %>

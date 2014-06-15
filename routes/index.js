@@ -122,7 +122,8 @@ module.exports = function(app){
 	app.post('/post',checkLogin);
 	app.post('/post',function(req,res){
 		var currentUser = req.session.user;
-		var post = new Post(currentUser.name,req.body.title,req.body.post);
+		var tags = [req.body.tag1, req.body.tag2, req.body.tag3];
+		var post = new Post(currentUser.name, req.body.title, tags, req.body.post);
 		post.save(function(err){
 			if(err){
 				req.flash('error',err);
@@ -183,6 +184,39 @@ module.exports = function(app){
 			});
 		});
 	});
+	
+	app.get('/tags', function(req, res){
+		Post.getTags(function(err, posts){
+			if(err){
+				req.flash('error',err);
+				return callback('/');
+			}
+			res.render('tags', {
+				title: '标签',
+				posts: posts,
+				user: req.session.user,
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			})
+		})
+	})
+	
+	app.get('/tags/:tag', function (req, res) {
+  Post.getTag(req.params.tag, function (err, posts) {
+    if (err) {
+      req.flash('error',err); 
+      return res.redirect('/');
+    }
+    res.render('tag', {
+      title: 'TAG:' + req.params.tag,
+      posts: posts,
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+});
+
 	//处理访问用户页的请求，然后从数据库取得该用户的数据并渲染 user.ejs 模版，生成页面并显示给用户
 	app.get('/u/:name', function(req, res){
 		var page = req.query.p ? parseInt(req.query.p) : 1;
