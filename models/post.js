@@ -29,7 +29,8 @@ Post.prototype.save = function(callback){
 		title : this.title,
 		tags: this.tags,
 		post : this.post,
-		comments: []
+		comments: [],
+		pv:0
 	};
 	//打开数据库
 	mongodb.open(function(err, db){
@@ -117,13 +118,27 @@ Post.getOne = function(name, day, title, callback){
 				"name": name,
 				"time.day":day,
 				"title":title
-			},function(err,doc){
-					mongodb.close();
+			},function(err, doc){
 					if(err){
+					mongodb.close();
 						return callback(err);
 					}
-					//解析markdown为html
+					
 					if(doc){
+					//访问一次，pv增加1
+						collection.update({
+							"name": name,
+							"time.day": day,
+							'title': title
+						},{
+							$inc: {"pv": 1}
+						}, function(err){
+							mongodb.close();
+							if(err){
+								return callback(err);
+							}
+						});
+						//解析markdown为html
 						doc.post = markdown.toHTML(doc.post);
 						doc.comments.forEach(function(comment){
 							comment.content = markdown.toHTML(comment.content);
@@ -143,7 +158,7 @@ Post.edit = function(name, day, title, callback){
 			return callback(err);
 		}
 		
-		db.collection('posts',function(err,collection){
+		db.collection('posts', function(err, collection){
 			if(err){
 				mongodb.close();
 				return callback(err);
@@ -154,7 +169,7 @@ Post.edit = function(name, day, title, callback){
 				"name": name,
 				"time.day":day,
 				"title":title
-			},function(err,doc){
+			}, function(err, doc){
 					mongodb.close();
 					if(err){
 						return callback(err);
@@ -168,7 +183,7 @@ Post.edit = function(name, day, title, callback){
 //更新文章
 Post.update = function(name, day, title, post, callback){
 	//打开数据库
-	mongodb.open(function(err,db){
+	mongodb.open(function(err, db){
 		if(err){
 			return callback(err);
 		}
@@ -186,7 +201,7 @@ Post.update = function(name, day, title, post, callback){
 				"title":title
 			},{
 				$set: {post: post}
-			},function(err){
+			}, function(err){
 					mongodb.close();
 					if(err){
 						return callback(err);

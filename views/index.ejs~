@@ -7,11 +7,12 @@
     标签:
     <% post.tags.forEach(function(tag, index){ %>
     	<% if (tag){ %>
-    		<a class = "tag" href = "/tags/<%= tag %>"></a>
+    		<a class = "tag" href = "/tags/<%= tag %>"><%= tag %></a>
     	<% } %>
     <% }) %>
   </p>
   <p><%- post.post %></p>
+  <p class = "info">阅读:<%= post.pv %> |评论：<%= post.comments.length %></p>
 <% }) %>
 <%- include page %>
 <%- include footer %>

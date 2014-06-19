@@ -202,7 +202,7 @@ module.exports = function(app){
 	})
 	
 	app.get('/tags/:tag', function (req, res) {
-  Post.getTag(req.params.tag, function (err, posts) {
+  	Post.getTag(req.params.tag, function (err, posts) {
     if (err) {
       req.flash('error',err); 
       return res.redirect('/');
@@ -227,7 +227,7 @@ module.exports = function(app){
 				return res.redirect('/');
 			}
 			//查询返回用户的第page页的10篇文章
-			Past.getTen(user.name, page, function(err, posts, total){
+			Post.getTen(user.name, page, function(err, posts, total){
 				if(err){
 					req.flash('error',err);
 					return res.redirect('/');
