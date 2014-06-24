@@ -1,0 +1,1 @@
+start C:\mongodb\mongod.exe --dbpath d:\mongodb\data\blog --logpath d:\mongodb\log\mongodb.log
