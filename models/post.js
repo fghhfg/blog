@@ -334,7 +334,7 @@ Post.getTags = function(callback){
 }
 
 //返回特定存档的所有文章
-Post.getTag = function(callback){
+Post.getTag = function(tag, callback){
 	mongodb.open(function(err, db){
 		if(err){
 			return callback(err);
