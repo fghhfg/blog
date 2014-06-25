@@ -6,6 +6,7 @@ var Post = require('../models/post.js');
 var Comment = require('../models/comment.js');
 var fs = require('fs');
 
+
 module.exports = function(app){
 	app.get('/',function(req, res){
 		//判断是否是第一页，并把请求的页数转换成number类型,req.query.p 获取的页数为字符串形式,parseInt() 把它转换成数字
@@ -263,14 +264,14 @@ module.exports = function(app){
 		})
 	})
 	//文章页面
-app.get('/u/:name/:day/:title', function (req, res) {
-  Post.getOne(req.params.name, req.params.day, req.params.title, function (err, post) {
+app.get('/p/:_id', function (req, res) {
+  Post.getOne(req.params._id, function (err, post) {
     if (err) {
       req.flash('error', err); 
       return res.redirect('/');
     }
     res.render('article', {
-      title: req.params.title,
+      title: post.title,
       post: post,
       user: req.session.user,
       success: req.flash('success').toString(),
