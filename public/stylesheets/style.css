@@ -4,9 +4,6 @@
 	margin : 0;
 }
 body {
-	width : 600px;
-	margin : 2em auto;
-	padding : 0 2em;
 	font - size : 14px;
 	font - family : "Microsoft YaHei";
 }
@@ -15,23 +12,35 @@ p {
 	margin : 1em 0;
 }
 header {
-	padding : .5em 0;
+	padding: 0 30%;
+	margin : 2em auto;
 	border - bottom : 1px solid # cccccc;
 }
+.navBar {
+
+	height: 50px;
+	max-width: 100%;
+	margin: 0 auto;
+	line-height: 32px;
+	background: #25282c;
+}
 nav {
-	position : fixed;
-	left : 12em;
-	font - family : "Microsoft YaHei";
-	font - size : 1.1em;
-	text - transform : uppercase;
-	width : 9em;
-	text - align : right;
+	padding: 0 30%;
+	width: 100%;
+	float: left;
+	position: fixed;
+	height: 50px;
+	background: #25282c;
+	
 }
 nav a {
+	float: left;
 	display : block;
 	text - decoration : none;
 	padding : .7em 1em;
-	color :  # 000000;
+	color :  deepskyblue;
+	font - family : "Microsoft YaHei";
+	text - transform : uppercase;
 }
 nav a : hover {
 	background - color :  # ff0000;
@@ -39,6 +48,7 @@ nav a : hover {
 	-webkit - transition : color.2s linear;
 }
 article {
+	padding: 0 30%;
 	font - size : 16px;
 	padding - top : .5em;
 }
@@ -117,7 +127,8 @@ article a : hover {
 }
 .search {
 	border : 0;
-	width : 6em;
+	height: 2.5em;
+	width : 15em;
 	text - align : center;
 	font - size : 1em;
 	margin : 0.5em 0;
@@ -131,4 +142,14 @@ article a : hover {
 	float : right;
 	margin - top : -2.5em;
 	box - shadow : 0px 1px 4px # 888;
+}
+#link{
+	color : deepskyblue;
+	padding: 0 30%;
+	width: 100%;
+	float: left;
+	height: 50px;
+	background: #25282c;
+	margin: 0 auto;
+	display : block;
 }
