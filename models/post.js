@@ -132,8 +132,8 @@ Post.getOne = function(_id, callback){
 								return callback(err);
 							}
 						});
-					}
-					callback(null,doc);//成功，已数组形式返回查询结果
+						callback(null,doc);//成功，已数组形式返回查询结果
+					}	
 			})
 		})
 	})
@@ -156,8 +156,8 @@ Post.edit = function(name, day, title, callback){
 			//根据day,name,title对象查询文章
 			collection.findOne({
 				"name": name,
-				"time.day":day,
-				"title":title
+        "time.day": day,
+        "title": title
 			}, function(err, doc){
 					mongodb.close();
 					if(err){
@@ -186,8 +186,8 @@ Post.update = function(name, day, title, post, callback){
 			//更新文章
 			collection.update({
 				"name": name,
-				"time.day":day,
-				"title":title
+        "time.day": day,
+        "title": title
 			},{
 				$set: {post: post}
 			}, function(err){
