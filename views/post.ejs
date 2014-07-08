@@ -7,10 +7,12 @@
 		<input type = "text" name = "tag2" />
 		<input type = "text" name = "tag3" /><br />
 		正文:<br />
-		<textarea name = "post" ></textarea><br />
+		<textarea id="editor_id" name = "post" ></textarea><br />
 		<input type = "submit" value = "发表" />
 	  <script> 
-			CKEDITOR.replace( 'post' );
-		</script>
+			KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id');
+        });
+	</script>
 	</form>
 <%- include footer %>

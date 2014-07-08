@@ -7,10 +7,12 @@
   <input type="text" name="tag2" value="<%= post.tags[1] %>" disabled="disabled" />
   <input type="text" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" /><br />
 	正文:<br />
-	<textarea name = "post" rows = "20" cols = "100"><%= post.post %></textarea><br />
+	<textarea id="editor_id" name = "post" rows = "20" cols = "100"><%= post.post %></textarea><br />
 	<input type = "submit" value = "保持修改" />
 	<script> 
-		CKEDITOR.replace( 'post' );
+		KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id');
+        });
 	</script>
 </form>
 <%- include footer %>
