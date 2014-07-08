@@ -1,5 +1,4 @@
 var mongodb = require('./db');
-var markdown = require('markdown').markdown;
 var ObjectID = require('mongodb').ObjectID;
 
 function Post(name, head, title, tags, post){
@@ -56,8 +55,7 @@ Post.prototype.save = function(callback){
 					return callback(err);
 				}
 				callback(null);
-			})
-			
+			})			
 		})
 	})
 }
@@ -93,10 +91,6 @@ Post.getTen = function(name, page, callback){
 				if(err){
 					return callback(err);
 				}
-				//解析markdown为html
-				docs.forEach(function(doc){
-					doc.post = markdown.toHTML(doc.post);
-				});
 				callback(null,docs,total);//成功，已数组形式返回查询结果
 			})
 			})
@@ -138,11 +132,6 @@ Post.getOne = function(_id, callback){
 								return callback(err);
 							}
 						});
-						//解析markdown为html
-						doc.post = markdown.toHTML(doc.post);
-						doc.comments.forEach(function(comment){
-							comment.content = markdown.toHTML(comment.content);
-						})
 					}
 					callback(null,doc);//成功，已数组形式返回查询结果
 			})
